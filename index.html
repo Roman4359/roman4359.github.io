@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>view borders</title>
+    <link rel="stylesheet" href="" />
+    <style>
+      * {
+        margin: 0;
+        /* border: 1px solid red; */
+
+        /* box-sizing: border-box; */
+      }
+
+      html {
+        border: unset;
+        /* overflow-y: hidden; */
+      }
+
+      body {
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .board {
+        box-sizing: border-box;
+        margin: 20px auto;
+        border: 10px solid #333;
+        height: 90vh;
+        max-width: 600px;
+        max-height: 600px;
+        position: relative;
+        border-radius: 10px;
+      }
+
+      .box {
+        box-sizing: border-box;
+        width: 60px;
+        height: 60px;
+        border: 5px solid #500000;
+        background-color: #00ac5c;
+        transition: all 300ms;
+        position: absolute;
+        top: 240px;
+        left: 240px;
+        border-radius: 50%;
+      }
+      .box > div {
+        /* border: 1px solid red; */
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        color: #f0f0f0;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body id="kinput">
+    <br />
+    <h1>move it by arrows</h1>
+    <div class="board" id="board">
+      <div class="box" id="box">
+        <div>♡</div>
+      </div>
+    </div>
+
+    <script>
+      let kinput = document.getElementById("kinput");
+      let board = document.getElementById("board");
+      let divbox = document.getElementById("box");
+
+      let box = {
+        size: 60,
+        left: parseInt(divbox.offsetLeft),
+        top: parseInt(divbox.offsetTop),
+
+        go(e) {
+          // divbox.style.width = divbox.style.height = "58px";
+          let mpx = 60;
+          if (e.key == "ArrowLeft") {
+            box.left -= mpx;
+            box.left < 60 ? (box.left = 0) : null;
+          }
+          if (e.key == "ArrowRight") {
+            box.left += mpx;
+            if (board.offsetWidth - 70 < box.left) {
+              box.left = board.offsetWidth - 80;
+            }
+          }
+
+          if (e.key == "ArrowUp") {
+            box.top -= mpx;
+            box.top < 60 ? (box.top = 0) : null;
+          }
+          if (e.key == "ArrowDown") {
+            box.top += mpx;
+            if (board.offsetHeight - 70 < box.top) {
+              box.top = board.offsetHeight - 80;
+            }
+          }
+
+          divbox.style.top = box.top + "px";
+          divbox.style.left = box.left + "px";
+        },
+        goUp(e) {
+          // divbox.style.width = divbox.style.height = "60px";
+          // setTimeout(
+          //   box.inmove ? null : (divbox.style.borderRadius = "5px");
+          // }, 5000);
+          // divbox.style.borderRadius = "10px";
+        },
+      };
+
+      // kinput.onkeyup = box.goUp;
+      kinput.onkeydown = box.go;
+      divbox.onmouseover = () => {
+        divbox.style.borderColor = "#ee0000";
+      };
+      divbox.onmouseout = () => {
+        divbox.style.borderColor = "#500000";
+      };
+    </script>
+  </body>
+</html>
